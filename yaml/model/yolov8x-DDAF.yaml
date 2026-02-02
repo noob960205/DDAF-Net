@@ -1,0 +1,71 @@
+nc: 6
+channels: 6
+scales:
+  # [depth, width, max_channels]
+  n: [0.33, 0.25, 1024]
+  s: [0.33, 0.50, 1024]
+  m: [0.67, 0.75, 768]
+  l: [1.00, 1.00, 512]
+  x: [1.00, 1.25, 512]
+
+# backbone
+backbone:
+  # [from, repeats, module, args]
+  # Layer 0: An anchor layer (Identity) that does nothing but provide a stable index '0'.
+  - [-1, 1, Identity, []]                       # 0
+    # Specificity Track (RGB)
+  - [0, 1, MyConv, [64, 1, 3, 2]]                   # 1（m尺寸，16 * 0.75 -> 12 -> 16，变为8的倍数）
+  - [-1, 1, Conv, [128, 3, 2]]                      # 2
+  - [-1, 3, C2f, [128, True]]                       # 3
+  - [-1, 1, Conv, [256, 3, 2]]                      # 4
+  - [-1, 6, C2f, [256, True]]                       # 5
+  - [-1, 1, Conv, [512, 3, 2]]                      # 6
+  - [-1, 6, C2f, [512, True]]                       # 7
+  - [-1, 1, Conv, [1024, 3, 2]]                     # 8
+  - [-1, 3, C2f, [1024, True]]                      # 9
+  - [-1, 1, SPPF, [1024, 5]]                        # 10
+  # Specificity Track (IR)
+  - [0, 1, MyConv, [64, 2, 3, 2]]                   # 11
+  - [-1, 1, Conv, [128, 3, 2]]                      # 12
+  - [-1, 3, C2f, [128, True]]                       # 13
+  - [-1, 1, Conv, [256, 3, 2]]                      # 14
+  - [-1, 6, C2f, [256, True]]                       # 15
+  - [-1, 1, Conv, [512, 3, 2]]                      # 16
+  - [-1, 6, C2f, [512, True]]                       # 17
+  - [-1, 1, Conv, [1024, 3, 2]]                     # 18
+  - [-1, 3, C2f, [1024, True]]                      # 19
+  - [-1, 1, SPPF, [1024, 5]]                        # 20
+  # Commonality Track (RGB and IR)
+  - [0, 1, MyConv, [128, 3, 3, 2, 'single']]        # 21
+  - [-1, 1, MyConv, [256, 3, 3, 2, 'single']]       # 22
+  - [-1, 3, MyC2f, [256, True]]                     # 23
+  - [-1, 1, MyConv, [512, 3, 3, 2, 'single']]       # 24
+  - [-1, 6, MyC2f, [512, True]]                     # 25
+  - [-1, 1, MyConv, [1024, 3, 3, 2, 'single']]      # 26
+  - [-1, 6, MyC2f, [1024, True]]                    # 27
+  - [-1, 1, MyConv, [2048, 3, 3, 2, 'single']]      # 28
+  - [-1, 3, MyC2f, [2048, True]]                    # 29
+  - [-1, 1, MySPPF, [2048, 5]]                      # 30
+  # DHAF (Decoupled and Differentiated Attention Fusion Network)
+  - [[5, 15, 25], 1, Concat, [1]]                   # 31
+  - [-1, 1, DAFM, [256, 4, 4]]                      # 32
+  - [[7, 17, 27], 1, Concat, [1]]                   # 33
+  - [-1, 1, DAFM, [512, 2, 8]]                      # 34
+  - [[10, 20, 30], 1, Concat, [1]]                  # 35
+  - [-1, 1, DAFM, [1024, 1, 8]]                     # 36
+
+# head
+head:
+  - [-1, 1, nn.Upsample, [None, 2, "nearest"]]      # 37
+  - [[-1, 34], 1, Concat, [1]]                      # 38
+  - [-1, 3, C2f, [512]]                             # 39
+  - [-1, 1, nn.Upsample, [None, 2, "nearest"]]      # 40
+  - [[-1, 32], 1, Concat, [1]]                      # 41
+  - [-1, 3, C2f, [256]]                             # 42
+  - [-1, 1, Conv, [256, 3, 2]]                      # 43
+  - [[-1, 39], 1, Concat, [1]]                      # 44
+  - [-1, 3, C2f, [512]]                             # 45
+  - [-1, 1, Conv, [512, 3, 2]]                      # 46
+  - [[-1, 36], 1, Concat, [1]]                      # 47
+  - [-1, 3, C2f, [1024]]                            # 48
+  - [[42, 45, 48], 1, Detect, [nc]]                 # Detect(P3, P4, P5)
