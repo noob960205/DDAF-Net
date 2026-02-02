@@ -1,4 +1,4 @@
-# DHAF-Net
+# DDAF-Net
 
 Official PyTorch implementation of “Decoupled and Differentiated Attention Fusion Network for Object Detection”
 
@@ -74,7 +74,7 @@ FLIR-aligned / LLVIP / M3FD / ...
 
 ⭐ **Dataset & weights download link:** 
 
-- [Baidu drive](https://pan.baidu.com/s/1LgY7_Xs86yyOJX_olyyikg?pwd=dhaf)
+- [Baidu drive](https://pan.baidu.com/s/1nGKAO1tFFy76STC1Xo8CLQ?pwd=ddaf)
 - [Google drive](https://drive.google.com/drive/folders/1kYFKWIeLFmQTXxxvmQhWh8aIjWEup8G5)
 
 ## Training
