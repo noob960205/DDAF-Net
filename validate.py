@@ -1,8 +1,8 @@
 from ultralytics import YOLO
 
 # 加载模型
-# model = YOLO('./runs/detect/FLIR-aligned-DHAFNet/weights/best.pt')
-model = YOLO('./runs/detect/M3FD-DHAFNet/weights/best.pt')
+# model = YOLO('./runs/detect/FLIR-DDAF/weights/best.pt')
+model = YOLO('./runs/detect/M3FD-DDAF/weights/best.pt')
 
 
 if __name__ == '__main__':

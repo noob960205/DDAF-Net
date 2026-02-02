@@ -74,7 +74,7 @@ def predict(model, model_type="multi", rgb_path=None, ir_path=None,
 
 if __name__ == "__main__":
     # 加载模型
-    model = load_model("./runs/detect/FLIR-aligned-DHAFNet/weights/best.pt")
+    model = load_model("./runs/detect/FLIR-DDAF/weights/best.pt")
     # 单模态推理（IR）
     # model = load_model("./runs/detect/M3FD-IR/weights/best.pt")
 

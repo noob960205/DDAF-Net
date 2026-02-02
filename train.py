@@ -61,14 +61,14 @@ if __name__ == "__main__":
     # model_yaml = "yaml/model/yolov8x-EarlyFusion.yaml"
     # model_yaml = "yaml/model/yolov8x-TwoStream.yaml"
     # model_yaml = "yaml/model/yolov8x-Siamese.yaml"
-    model_yaml = "yaml/model/yolov8x-DHAFNet.yaml"
+    model_yaml = "yaml/model/yolov8x-DDAF.yaml"
 
     # 数据集配置文件路径
     # data_yaml = "./yaml/data/M3FD-IR.yaml"
     data_yaml = "./yaml/data/LLVIP-MM.yaml"
 
     # 训练任务名称（用于保存目录）
-    name = "LLVIP-DHAFNet"
+    name = "LLVIP-DDAF"
     # 设备、训练参数
     device = "cuda:3"
     epochs = 300
