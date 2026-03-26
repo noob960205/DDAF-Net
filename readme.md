@@ -103,7 +103,16 @@ Please refer to the **`./runs/detect/`** directory for training results.
 If you find this work useful in your research, please consider citing our paper:
 
 ```
-
+@article{yu2026ddaf,
+  title={DDAF-Net: Decoupled and Differentiated Attention Fusion Network for Object Detection},
+  author={Yu, Bo and Zhang, Guanghui and Wang, Qun and Wang, Lei},
+  journal={Sensors},
+  volume={26},
+  number={6},
+  pages={1812},
+  year={2026},
+  publisher={MDPI}
+}
 ```
 
 ## Acknowledgements
