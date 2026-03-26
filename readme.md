@@ -2,9 +2,9 @@
 
 Official PyTorch implementation of “Decoupled and Differentiated Attention Fusion Network for Object Detection”
 
-[Paper]()
+[Paper](https://www.mdpi.com/1424-8220/26/6/1812)
 
-🔒 The core implementation folder **`ultralytics/`** will be released after the paper is accepted.
+🔒 The core backbone and the DAFM module have been released.
 
 ## Abstract
 
